@@ -1,0 +1,3 @@
+[tool.logfire]
+project_name = "My Project"
+console_colors = "never"
