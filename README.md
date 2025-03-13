@@ -1,0 +1,1 @@
+# pydantic-rag-ollama
