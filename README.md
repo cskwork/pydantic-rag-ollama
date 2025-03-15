@@ -59,12 +59,12 @@ This project demonstrates how to build a RAG system that:
 
 ### Build the search database:
 ```bash
-python script.py build
+python main.py build
 ```
 
 ### Run a search query:
 ```bash
-python script.py search "How do I configure logfire to work with FastAPI?"
+python main.py search "How do I configure logfire to work with FastAPI?"
 ```
 
 ## Key Components
