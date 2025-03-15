@@ -21,10 +21,9 @@ from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
 
 # 'if-token-present' means nothing will be sent (and the example will work) if you don't have logfire configured
-logfire.configure(send_to_logfire='if-token-present', token='add-logfire-token')
+logfire.configure(send_to_logfire='if-token-present', token='{logfire-token}')
 logfire.info('Hello, {place}!', place='World')
 logfire.instrument_asyncpg()
-
 
 @dataclass
 class Deps:
@@ -116,11 +115,17 @@ async def build_search_db():
                     await conn.execute(DB_SCHEMA)
 
         sem = asyncio.Semaphore(10)
-        async with asyncio.TaskGroup() as tg:
-            for section in sections:
-                tg.create_task(insert_doc_section(sem, ollama_provider, pool, section))
+        tasks = []
+        for section in sections:
+            tasks.append(
+                asyncio.create_task(
+                    insert_doc_section(sem, ollama_provider, pool, section)
+                )
+            )
+        # Wait for all tasks to complete
+        await asyncio.gather(*tasks)
 
-        # Add count verification here, after TaskGroup completes
+        # Add count verification here, after all tasks complete
         count = await pool.fetchval('SELECT COUNT(*) FROM doc_sections')
         logfire.info('Database build complete. Total records: {count}', count=count)
         print(f"Total records inserted: {count}")
