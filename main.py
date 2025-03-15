@@ -33,7 +33,7 @@ class Deps:
 
 # Use the built-in OpenAIModel with Ollama provider
 ollama_provider = OpenAIProvider(base_url='http://localhost:11434/v1')
-ollama_model = OpenAIModel(model_name='llama3.2:1b', provider=ollama_provider)
+ollama_model = OpenAIModel(model_name='nemotron-mini:latest', provider=ollama_provider)
 agent = Agent(ollama_model, deps_type=Deps, instrument=True)
 
 @agent.tool
@@ -256,7 +256,7 @@ CREATE INDEX IF NOT EXISTS idx_doc_sections_embedding ON doc_sections USING hnsw
 
 def slugify(value: str, separator: str, unicode: bool = False) -> str:
     """Slugify a string, to make it URL friendly."""
-    # Taken unchanged from https://github.com/Python-Markdown/markdown/blob/3.7/markdown/extensions/toc.py#L38
+    # Taken unchanged from https://github.com/Python-Markdown/markdown/blob/3.7/markdown/extensions/toc.py#38
     if not unicode:
         # Replace Extended Latin characters with ASCII, i.e. `žlutý` => `zluty`
         value = unicodedata.normalize('NFKD', value)

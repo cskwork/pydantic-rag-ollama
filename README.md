@@ -15,7 +15,7 @@ This project demonstrates how to build a RAG system that:
 - Python 3.10+
 - Docker Desktop for Windows
 - PostgreSQL with pgvector extension
-- Ollama with `llama3.2:1b` and `nomic-embed-text` models
+- Ollama with `nemotron-mini:latest` and `nomic-embed-text` models
 
 ## Setup
 
@@ -45,7 +45,7 @@ This project demonstrates how to build a RAG system that:
    docker run --name ollama -p 11434:11434 -v ollama:/root/.ollama -d ollama/ollama
    
    # Pull required models
-   docker exec ollama ollama pull llama3.2:1b
+   docker exec ollama ollama pull nemotron-mini:latest
    docker exec ollama ollama pull nomic-embed-text
    ```
 
@@ -59,12 +59,12 @@ This project demonstrates how to build a RAG system that:
 
 ### Build the search database:
 ```bash
-python main.py build
+python main-run.py build
 ```
 
 ### Run a search query:
 ```bash
-python main.py search "How do I configure logfire to work with FastAPI?"
+python main-run.py search "How do I configure logfire to work with FastAPI?"
 ```
 
 ## Key Components
