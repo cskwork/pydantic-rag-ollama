@@ -21,7 +21,7 @@ from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.openai import OpenAIProvider
 
 # 'if-token-present' means nothing will be sent (and the example will work) if you don't have logfire configured
-logfire.configure(send_to_logfire='if-token-present', token='{logfire-token}')
+logfire.configure(send_to_logfire='if-token-present', token='{replace-with-logfire-token}')
 logfire.info('Hello, {place}!', place='World')
 logfire.instrument_asyncpg()
 
@@ -56,7 +56,7 @@ async def retrieve(context: RunContext[Deps], search_query: str) -> str:
             model='nomic-embed-text',  # Specify the embedding model available in Ollama
             input=search_query
         )
-        embedding = embedding_response['embedding']
+        embedding = embedding_response['embeddings'][0]
         print(embedding)
 
     embedding_json = pydantic_core.to_json(embedding).decode()
